@@ -1,7 +1,7 @@
 name: liplayer
 description: 因为 fijkplayer 没人维护，我自己新建了一个项目，来适配新版本的 flutter.
 version: 0.0.1
-homepage:
+homepage: https://github.com/randsoy/liplayer
 
 environment:
   sdk: '>=3.0.2 <4.0.0'
