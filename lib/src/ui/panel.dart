@@ -161,7 +161,7 @@ class _DefaultLiPanelState extends State<_DefaultLiPanel> {
     });
   }
 
-  Widget _buildVolumeButton() {
+  Widget _buildVolumeButton(Color color) {
     IconData iconData;
     if (_volume <= 0) {
       iconData = Icons.volume_off;
@@ -170,6 +170,7 @@ class _DefaultLiPanelState extends State<_DefaultLiPanel> {
     }
     return IconButton(
       icon: Icon(iconData),
+      color: color,
       padding: const EdgeInsets.only(left: 10.0, right: 10.0),
       onPressed: () {
         setState(() {
@@ -186,20 +187,26 @@ class _DefaultLiPanelState extends State<_DefaultLiPanel> {
         _seekPos > 0 ? _seekPos : _currentPos.inMilliseconds.toDouble();
     currentValue = min(currentValue, duration);
     currentValue = max(currentValue, 0);
+
+    const backgroundColor =
+        Colors.transparent; // Theme.of(context).dialogBackgroundColor;
+    final color =
+        backgroundColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
     return AnimatedOpacity(
       opacity: _hideStuff ? 0.0 : 0.8,
       duration: const Duration(milliseconds: 400),
       child: Container(
-        height: barHeight,
-        color: Theme.of(context).dialogBackgroundColor,
+        padding: const EdgeInsets.only(bottom: 20),
+        height: barHeight + 20,
+        color: backgroundColor,
         child: Row(
           children: <Widget>[
-            _buildVolumeButton(),
+            _buildVolumeButton(color),
             Padding(
               padding: const EdgeInsets.only(right: 5.0, left: 5),
               child: Text(
                 _duration2String(_currentPos),
-                style: const TextStyle(fontSize: 14.0),
+                style: TextStyle(fontSize: 14.0, color: color),
               ),
             ),
 
@@ -207,7 +214,7 @@ class _DefaultLiPanelState extends State<_DefaultLiPanel> {
                 ? const Expanded(child: Center())
                 : Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 0, left: 0),
+                      padding: const EdgeInsets.only(right: 5, left: 5),
                       child: LiSlider(
                         value: currentValue,
                         cacheValue: _bufferPos.inMilliseconds.toDouble(),
@@ -236,18 +243,17 @@ class _DefaultLiPanelState extends State<_DefaultLiPanel> {
 
             // duration / position
             _duration.inMilliseconds == 0
-                ? const Text("LIVE")
+                ? Text("LIVE", style: TextStyle(color: color))
                 : Padding(
-                    padding: const EdgeInsets.only(right: 5.0, left: 5),
+                    padding: const EdgeInsets.only(right: 5, left: 10),
                     child: Text(
                       _duration2String(_duration),
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                      ),
+                      style: TextStyle(fontSize: 14.0, color: color),
                     ),
                   ),
 
             IconButton(
+              color: color,
               icon: Icon(widget.player.value.fullScreen
                   ? Icons.fullscreen_exit
                   : Icons.fullscreen),
@@ -268,15 +274,16 @@ class _DefaultLiPanelState extends State<_DefaultLiPanel> {
 
   @override
   Widget build(BuildContext context) {
-    Rect rect = player.value.fullScreen
-        ? Rect.fromLTWH(0, 0, widget.viewSize.width, widget.viewSize.height)
-        : Rect.fromLTRB(
-            max(0.0, widget.texturePos.left),
-            max(0.0, widget.texturePos.top),
-            min(widget.viewSize.width, widget.texturePos.right),
-            min(widget.viewSize.height, widget.texturePos.bottom));
-    return Positioned.fromRect(
-      rect: rect,
+    // Rect rect = player.value.fullScreen
+    //     ? Rect.fromLTWH(0, 0, widget.viewSize.width, widget.viewSize.height)
+    //     : Rect.fromLTRB(
+    //         max(0.0, widget.texturePos.left),
+    //         max(0.0, widget.texturePos.top),
+    //         min(widget.viewSize.width, widget.texturePos.right),
+    //         min(widget.viewSize.height, widget.texturePos.bottom));
+    return Positioned(
+      // rect: rect,
+      // bottom: 10,
       child: GestureDetector(
         onTap: _cancelAndRestartTimer,
         child: AbsorbPointer(

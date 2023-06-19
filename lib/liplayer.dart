@@ -17,5 +17,6 @@ part 'src/option.dart';
 
 part 'src/ui/view.dart';
 part 'src/ui/panel.dart';
+// part 'src/ui/panel2.dart';
 part 'src/ui/slider.dart';
 part 'src/ui/volume.dart';

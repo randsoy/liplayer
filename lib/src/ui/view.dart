@@ -263,7 +263,7 @@ class _LiViewState extends State<LiView> {
     return _defaultRoutePageBuilder(context, animation);
   }
 
-  Future<dynamic> _pushFullScreenWidget(BuildContext context) async {
+  Future<void> _pushFullScreenWidget(BuildContext context) async {
     final TransitionRoute route = PageRouteBuilder(
       settings: const RouteSettings(),
       pageBuilder: _fullScreenRoutePageBuilder,
@@ -519,7 +519,7 @@ class __InnermpViewState extends State<_InnerLiView> {
       final Rect pos = Rect.fromLTWH(
           offset.dx, offset.dy, childSize.width, childSize.height);
 
-      List ws = <Widget>[
+      List<Widget> ws = [
         Container(
           width: constraints.maxWidth,
           height: constraints.maxHeight,
@@ -547,7 +547,7 @@ class __InnermpViewState extends State<_InnerLiView> {
         ws.add(_panelBuilder!(_player, data, ctx, constraints.biggest, pos));
       }
       return Stack(
-        children: ws as List<Widget>,
+        children: ws,
       );
     });
   }

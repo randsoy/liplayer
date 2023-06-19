@@ -8,4 +8,8 @@
 flutter create -t plugin -i objc -a java --platforms android,ios liplayer
 ```
 
-## Getting Started
+## 发布
+
+```sh
+
+```

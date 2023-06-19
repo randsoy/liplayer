@@ -49,6 +49,7 @@ class _VideoScreenState extends State<VideoScreen> {
           player: player,
           panelBuilder: defaultLiPanelBuilder,
           fsFit: LiFit.fill,
+          color: Colors.black,
           // panelBuilder: simplestUI,
           // panelBuilder: (LiPlayer player, BuildContext context,
           //     Size viewSize, Rect texturePos) {
